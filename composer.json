@@ -1,6 +1,6 @@
 {
-	"name" : "phpmv/ubiquity-workerman",
-	"description" : "Workerman extension for Ubiquity framework",
+	"name" : "phpmv/ubiquity-ngx",
+	"description" : "php-ngx extension for Ubiquity framework",
 	"type" : "extension",
 	"keywords" : [
 		"php",
@@ -8,11 +8,10 @@
 		"mvc",
 		"orm",
 		"server",
-		"workerman"
+		"php-ngx"
 	],
 	"require" : {
-		"php" : ">7.0",
-		"workerman/workerman": "~3.5"
+		"php" : "^7.4"
 	},
 	"license" : "Apache-2.0",
 	"authors" : [{
