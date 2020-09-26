@@ -11,24 +11,14 @@ namespace Ubiquity\utils\http\foundation;
  */
 class NgxHttp extends AbstractHttp {
 
-	private $headers = [];
-
-	private $responseCode = 200;
-
-	private $datas;
-
 	public function getAllHeaders() {
 		return \ngx_request_headers();
-	}
-
-	public function setDatas($datas) {
-		return $this->datas;
 	}
 
 	public function header($key, $value, bool $replace = true, int $http_response_code = null) {
 		\ngx_header_set($key, $value);
 		if ($http_response_code != null) {
-			$this->responseCode = $http_response_code;
+			$this->setResponseCode($http_response_code);
 		}
 	}
 
@@ -37,7 +27,7 @@ class NgxHttp extends AbstractHttp {
 	 * @return int
 	 */
 	public function getResponseCode() {
-		return $this->responseCode;
+		return \ngx_status();
 	}
 
 	/**
@@ -46,10 +36,7 @@ class NgxHttp extends AbstractHttp {
 	 */
 	public function setResponseCode($responseCode) {
 		if ($responseCode != null) {
-			$this->responseCode = $responseCode;
-			if (\PHP_SAPI != 'cli') {
-				return \http_response_code($responseCode);
-			}
+			\ngx_status($responseCode);
 			return $responseCode;
 		}
 		return false;
@@ -61,6 +48,29 @@ class NgxHttp extends AbstractHttp {
 
 	public function getInput() {
 		return \ngx_query_args() + \ngx_post_args();
+	}
+
+	public function setRequest() {
+		$_SERVER = [];
+		$_SERVER['REQUEST_URI'] = \ngx_request_uri();
+		$_SERVER['QUERY_STRING'] = \ngx_request_query_string();
+		$_SERVER['REQUEST_METHOD'] = \ngx_request_method();
+		$_SERVER['REMOTE_ADDR'] = \ngx_request_remote_addr();
+
+		$headers = \ngx_request_headers();
+		foreach ($headers as $k => $v) {
+			$_SERVER['HTTP_' . \strtoupper($k)] = $v;
+		}
+
+		$_GET = \ngx_query_args() ?? [];
+		$_POST = \ngx_post_args() ?? [];
+		foreach ($_GET as $k => $v) {
+			$_GET[\urldecode($k)] = \urldecode($v);
+			if ($k != \urldecode($k)) {
+				unset($_GET[$k]);
+			}
+		}
+		$_REQUEST = $_GET + $_POST;
 	}
 }
 
