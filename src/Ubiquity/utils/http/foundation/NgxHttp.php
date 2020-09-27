@@ -71,6 +71,7 @@ class NgxHttp extends AbstractHttp {
 			}
 		}
 		$_REQUEST = $_GET + $_POST;
+		$_COOKIE = \ngx_cookie_get_all();
 	}
 }
 
