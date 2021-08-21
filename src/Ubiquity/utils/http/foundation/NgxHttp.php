@@ -2,7 +2,7 @@
 namespace Ubiquity\utils\http\foundation;
 
 /**
- * Http instance for Swoole.
+ * Http instance for ngx.
  * Ubiquity\utils\http\foundation$NgxHttp
  * This class is part of Ubiquity
  *
