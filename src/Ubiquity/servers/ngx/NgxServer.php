@@ -23,11 +23,10 @@ class NgxServer {
 		}
 	}
 
-	public static function handleRequest() {
+	public static function handleRequest($uri) {
 		self::$httpInstance->setRequest();
-		$_GET['c'] = \ltrim(\urldecode(\parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH)), '/');
-		//\Ubiquity\controllers\StartupAsync::forward($_GET['c']);
-		error_log( $_GET['c']);
+		$_GET['c'] = \ltrim(\urldecode(\parse_url($uri, PHP_URL_PATH)), '/');
+		\Ubiquity\controllers\StartupAsync::forward($_GET['c']);
 	}
 }
 
