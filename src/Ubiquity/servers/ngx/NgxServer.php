@@ -27,7 +27,7 @@ class NgxServer {
 		self::$httpInstance->setRequest();
 		$_GET['c'] = \ltrim(\urldecode(\parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH)), '/');
 		//\Ubiquity\controllers\StartupAsync::forward($_GET['c']);
-		echo $_GET['c'];
+		error_log( $_GET['c']);
 	}
 }
 
