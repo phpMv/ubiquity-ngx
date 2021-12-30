@@ -7,7 +7,7 @@ namespace Ubiquity\utils\http\foundation;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.0
+ * @version 1.0.1
  */
 class NgxHttp extends AbstractHttp {
 
@@ -15,7 +15,7 @@ class NgxHttp extends AbstractHttp {
 		return \ngx_request_headers();
 	}
 
-	public function header($key, $value, bool $replace = true, int $http_response_code = null) {
+	public function header($key, $value, bool $replace = true, int $http_response_code = 0) {
 		\ngx_header_set($key, $value);
 		if ($http_response_code != null) {
 			$this->setResponseCode($http_response_code);
